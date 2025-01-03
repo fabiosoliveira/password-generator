@@ -1,5 +1,7 @@
 package password
 
+import "unicode"
+
 func validatePassword(password string, uppercase, lowercase, numbers, symbols bool) bool {
 
 	uppercaseValid := false
@@ -11,15 +13,15 @@ func validatePassword(password string, uppercase, lowercase, numbers, symbols bo
 
 	for _, char := range password {
 		if !uppercaseValid && uppercase {
-			uppercaseValid = isUppercase(char)
+			uppercaseValid = unicode.IsUpper(char)
 		}
 
 		if !lowercaseValid && lowercase {
-			lowercaseValid = isLowercase(char)
+			lowercaseValid = unicode.IsLower(char)
 		}
 
 		if !numbersValid && numbers {
-			numbersValid = isNumber(char)
+			numbersValid = unicode.IsDigit(char)
 		}
 
 		if !symbolsValid && symbols {
@@ -60,16 +62,4 @@ func isSymbol(char rune) bool {
 		}
 	}
 	return false
-}
-
-func isNumber(char rune) bool {
-	return char >= '0' && char <= '9'
-}
-
-func isLowercase(char rune) bool {
-	return char >= 'a' && char <= 'z'
-}
-
-func isUppercase(char rune) bool {
-	return char >= 'A' && char <= 'Z'
 }
