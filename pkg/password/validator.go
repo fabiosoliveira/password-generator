@@ -7,6 +7,8 @@ func validatePassword(password string, uppercase, lowercase, numbers, symbols bo
 	numbersValid := false
 	symbolsValid := false
 
+	options := []bool{}
+
 	for _, char := range password {
 		if !uppercaseValid && uppercase {
 			uppercaseValid = isUppercase(char)
@@ -25,7 +27,29 @@ func validatePassword(password string, uppercase, lowercase, numbers, symbols bo
 		}
 	}
 
-	return uppercaseValid && lowercaseValid && numbersValid && symbolsValid
+	if uppercase {
+		options = append(options, uppercaseValid)
+	}
+
+	if lowercase {
+		options = append(options, lowercaseValid)
+	}
+
+	if numbers {
+		options = append(options, numbersValid)
+	}
+
+	if symbols {
+		options = append(options, symbolsValid)
+	}
+
+	for _, option := range options {
+		if !option {
+			return false
+		}
+	}
+
+	return true
 }
 
 func isSymbol(char rune) bool {
