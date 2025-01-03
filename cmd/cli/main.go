@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"os"
 	"strconv"
+
+	"github.com/fabiosoliveira/password-generator/pkg/password"
 )
 
 func main() {
@@ -46,5 +48,6 @@ func main() {
 		os.Exit(1)
 	}
 
-	fmt.Println(length, uppercase, lowercase, numbers, symbols)
+	password := password.GeneratePassword(length, uppercase, lowercase, numbers, symbols)
+	fmt.Println(password)
 }
